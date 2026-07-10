@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Playlist Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="noise-overlay" aria-hidden="true"></div>
+<span class="corner-mark corner-mark--tl" aria-hidden="true">⌐</span>
+<span class="corner-mark corner-mark--br" aria-hidden="true">⌐</span>
+
+<header class="site-header">
+  <div class="site-header__identity">
+    <span class="site-header__brand">⌐ ryuushouin touga · playlist studio</span>
+    <span class="site-header__tagline" id="tagline"></span>
+  </div>
+  <nav class="view-toggle" aria-label="檢視模式切換">
+    <button type="button" class="view-toggle__btn" data-view="index">索引</button>
+    <button type="button" class="view-toggle__btn" data-view="wall">封面牆</button>
+  </nav>
+</header>
+
+<main id="main">
+  <section id="view-index" class="view view-index">
+    <div class="index-featured" id="index-featured"></div>
+    <div class="index-list" id="index-list"></div>
+  </section>
+
+  <section id="view-wall" class="view view-wall" hidden>
+    <div id="wall-families"></div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <span>curated on spotify · <span id="footer-year"></span></span>
+  <span class="corner-mark corner-mark--inline">⌐</span>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>
