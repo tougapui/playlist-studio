@@ -126,6 +126,9 @@
   function init(data) {
     state.data = data;
 
+    document.title = data.site.title;
+    document.getElementById("site-title").textContent = data.site.title.toLowerCase();
+    document.getElementById("site-owner").textContent = "⌐ " + data.site.owner.toLowerCase();
     document.getElementById("footer-year").textContent = new Date().getFullYear();
 
     renderWall();
