@@ -64,12 +64,14 @@
     embed.appendChild(iframe);
 
     sidebar.classList.add("is-open");
+    document.body.classList.add("has-player");
   }
 
   function closePlayer() {
     var sidebar = document.getElementById("player-sidebar");
     var embed = document.getElementById("player-embed");
     sidebar.classList.remove("is-open");
+    document.body.classList.remove("has-player");
     embed.innerHTML = "";
   }
 
