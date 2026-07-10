@@ -1,0 +1,115 @@
+{
+  "site": {
+    "title": "Playlist Studio",
+    "owner": "Ryuushouin Touga",
+    "tagline": "十一份歌單,五個系列,一種美感"
+  },
+  "families": [
+    { "id": "japanese", "label": "日系家族", "en": "japanese" },
+    { "id": "solo",     "label": "獨處家族", "en": "solo" },
+    { "id": "function", "label": "功能家族", "en": "function" },
+    { "id": "screen",   "label": "影像家族", "en": "screen" },
+    { "id": "kpop",     "label": "K-Pop 家族", "en": "k-pop" }
+  ],
+  "playlists": [
+    {
+      "slug": "evening-japanese-calm",
+      "name": "Evening Japanese Calm",
+      "spotifyId": "6YzRnN5s7ksacBU4e7LGsI",
+      "family": "japanese",
+      "description": "下班了!來聽深夜食堂感的音樂,洗清一身的疲憊。",
+      "followers": 114,
+      "featured": true
+    },
+    {
+      "slug": "tokyo-commute-tunes",
+      "name": "Tokyo Commute Tunes",
+      "spotifyId": "2QsNfWZTJLfBQrGryPrSnp",
+      "family": "japanese",
+      "description": "適合早上通勤聽,充滿朝氣。",
+      "followers": null,
+      "featured": false
+    },
+    {
+      "slug": "japan-shamisen-fusion",
+      "name": "Japan Shamisen Fusion",
+      "spotifyId": "7fRjkEAeWDz09BIQfeTtJr",
+      "family": "japanese",
+      "description": "流行音樂與動漫中的三味線。",
+      "followers": null,
+      "featured": false
+    },
+    {
+      "slug": "romance-for-one",
+      "name": "Romance for One",
+      "spotifyId": "4yc0RkB0peHS50DSekMG3O",
+      "family": "solo",
+      "description": "一個人也能很浪漫。",
+      "followers": 3,
+      "featured": false
+    },
+    {
+      "slug": "swaying-on-my-own",
+      "name": "Swaying On My Own",
+      "spotifyId": "0eRsRvt8ytuIbcHOSgpNpZ",
+      "family": "solo",
+      "description": "一個人輕輕地搖擺。",
+      "followers": null,
+      "featured": false
+    },
+    {
+      "slug": "cosmic-sleep",
+      "name": "Cosmic Sleep",
+      "spotifyId": "0dlZTHTLgjFyPOkcLvxvDe",
+      "family": "function",
+      "description": "太空感的療癒音樂,很適合睡前聽。",
+      "followers": 2,
+      "featured": false
+    },
+    {
+      "slug": "soundtracks-for-study",
+      "name": "Soundtracks for Study",
+      "spotifyId": "4mw3mhghb09e5XmYs6Wsg8",
+      "family": "function",
+      "description": "讀書時的專注配樂。",
+      "followers": null,
+      "featured": false
+    },
+    {
+      "slug": "musical-movie",
+      "name": "Musical Movie",
+      "spotifyId": "22F9wMngdDyoSoBeGeh5EQ",
+      "family": "screen",
+      "description": "音樂劇電影的歌曲選集。",
+      "followers": null,
+      "featured": false
+    },
+    {
+      "slug": "reimagined-cover",
+      "name": "Reimagined Cover",
+      "spotifyId": "7hsSxkSt9yzPvlmbiFEzXO",
+      "family": "screen",
+      "description": "唱出不同於原唱風格的翻唱。",
+      "followers": null,
+      "featured": false
+    },
+    {
+      "slug": "anime-mental",
+      "name": "Anime Mental",
+      "spotifyId": "3rXbCQAvhu2rWjVaKKLKs4",
+      "family": "screen",
+      "description": "動漫音樂選集。",
+      "followers": null,
+      "featured": false
+    },
+    {
+      "slug": "k-pop-rain-vibes",
+      "name": "K-Pop Rain Vibes",
+      "spotifyId": "5xtCFUyvf8HJkhX8QLOJql",
+      "family": "kpop",
+      "description": "雨天限定的 K-Pop 心情。",
+      "followers": null,
+      "featured": false
+    }
+  ]
+}
