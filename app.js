@@ -9,6 +9,13 @@
     viewMode: "index"
   };
 
+  var SPOTIFY_ICON_SVG = '<svg class="spotify-icon" viewBox="0 0 24 24" aria-hidden="true">' +
+    '<circle cx="12" cy="12" r="9.3" fill="none" stroke="currentColor" stroke-width="1.4"/>' +
+    '<path d="M6.8 9.6c3.6-1.4 6.8-1.4 10.4 0" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>' +
+    '<path d="M7.3 12.4c2.9-1.1 6.5-1.1 9.4 0" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>' +
+    '<path d="M7.9 15.1c2.2-.8 5.1-.8 7.3 0" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>' +
+    '</svg>';
+
   function isMobile() {
     return window.innerWidth <= 768 || /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
   }
@@ -47,7 +54,7 @@
   }
 
   function embedUrl(playlist) {
-    return "https://open.spotify.com/embed/playlist/" + playlist.spotifyId + "?theme=0";
+    return "https://open.spotify.com/embed/playlist/" + playlist.spotifyId + "?theme=0&autoplay=1";
   }
 
   function makeEmbedWrap(playlist) {
@@ -70,7 +77,7 @@
     a.href = openLink(playlist);
     a.target = "_blank";
     a.rel = "noopener noreferrer";
-    a.textContent = "在 spotify 開啟 ↗";
+    a.innerHTML = SPOTIFY_ICON_SVG + " 在 spotify 開啟 ↗";
     return a;
   }
 
@@ -85,8 +92,29 @@
     var card = document.createElement("div");
     card.className = "featured-card";
 
+    var coverWrap = document.createElement("div");
+    coverWrap.className = "featured-card__cover-wrap";
+
     var cover = makeCoverImg(featured, "featured-card__cover");
-    card.appendChild(cover);
+    coverWrap.appendChild(cover);
+
+    var playOverlay = document.createElement("div");
+    playOverlay.className = "featured-card__play";
+    var playIcon = document.createElement("div");
+    playIcon.className = "featured-card__play-icon";
+    playIcon.textContent = "▶";
+    playOverlay.appendChild(playIcon);
+    coverWrap.appendChild(playOverlay);
+
+    card.appendChild(coverWrap);
+
+    var panel = document.createElement("div");
+    panel.className = "featured-card__panel";
+    card.appendChild(panel);
+
+    coverWrap.addEventListener("click", function () {
+      handleFeaturedCoverClick(featured, panel);
+    });
 
     var label = document.createElement("div");
     label.className = "featured-card__label";
@@ -115,10 +143,34 @@
     play.href = openLink(featured);
     play.target = "_blank";
     play.rel = "noopener noreferrer";
-    play.textContent = "播放 ▶";
+    play.innerHTML = SPOTIFY_ICON_SVG + " 播放 ▶";
     card.appendChild(play);
 
     container.appendChild(card);
+  }
+
+  function handleFeaturedCoverClick(playlist, panel) {
+    if (isMobile()) {
+      window.open(openLink(playlist), "_blank", "noopener,noreferrer");
+      return;
+    }
+    var isOpen = panel.classList.contains("is-open");
+    closeAllPanels(panel);
+    if (isOpen) {
+      panel.classList.remove("is-open");
+      panel.innerHTML = "";
+    } else {
+      var inner = document.createElement("div");
+      inner.className = "featured-card__panel-inner";
+      inner.appendChild(makeEmbedWrap(playlist));
+      var actions = document.createElement("div");
+      actions.className = "embed-actions";
+      actions.appendChild(makeOpenLink(playlist));
+      inner.appendChild(actions);
+      panel.innerHTML = "";
+      panel.appendChild(inner);
+      panel.classList.add("is-open");
+    }
   }
 
   function orderedPlaylists() {
@@ -143,6 +195,19 @@
       var head = document.createElement("button");
       head.type = "button";
       head.className = "index-row__head";
+
+      var thumbWrap = document.createElement("span");
+      thumbWrap.className = "index-row__thumb-wrap";
+      var thumb = makeCoverImg(playlist, "index-row__thumb");
+      thumbWrap.appendChild(thumb);
+      var thumbPlay = document.createElement("span");
+      thumbPlay.className = "index-row__thumb-play";
+      var thumbPlayIcon = document.createElement("span");
+      thumbPlayIcon.className = "index-row__thumb-play-icon";
+      thumbPlayIcon.textContent = "▶";
+      thumbPlay.appendChild(thumbPlayIcon);
+      thumbWrap.appendChild(thumbPlay);
+      head.appendChild(thumbWrap);
 
       var num = document.createElement("span");
       num.className = "index-row__num";
@@ -201,18 +266,24 @@
     panel.appendChild(inner);
   }
 
+  function closeAllPanels(except) {
+    document.querySelectorAll(
+      ".index-row__panel.is-open, .wall-card__panel.is-open, .featured-card__panel.is-open"
+    ).forEach(function (p) {
+      if (p !== except) {
+        p.classList.remove("is-open");
+        p.innerHTML = "";
+      }
+    });
+  }
+
   function handleRowClick(playlist, panel) {
     if (isMobile()) {
       window.open(openLink(playlist), "_blank", "noopener,noreferrer");
       return;
     }
     var isOpen = panel.classList.contains("is-open");
-    document.querySelectorAll(".index-row__panel.is-open, .wall-card__panel.is-open").forEach(function (p) {
-      if (p !== panel) {
-        p.classList.remove("is-open");
-        p.innerHTML = "";
-      }
-    });
+    closeAllPanels(panel);
     if (isOpen) {
       panel.classList.remove("is-open");
       panel.innerHTML = "";
@@ -308,12 +379,7 @@
       return;
     }
     var isOpen = panel.classList.contains("is-open");
-    document.querySelectorAll(".index-row__panel.is-open, .wall-card__panel.is-open").forEach(function (p) {
-      if (p !== panel) {
-        p.classList.remove("is-open");
-        p.innerHTML = "";
-      }
-    });
+    closeAllPanels(panel);
     if (isOpen) {
       panel.classList.remove("is-open");
       panel.innerHTML = "";
