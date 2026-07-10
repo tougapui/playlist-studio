@@ -1,15 +1,14 @@
 {
   "site": {
     "title": "Playlist Studio",
-    "owner": "Ryuushouin Touga",
-    "tagline": "十一份歌單,五個系列,一種美感"
+    "owner": "Ryuushouin Touga"
   },
   "families": [
-    { "id": "japanese", "label": "日系家族", "en": "japanese" },
-    { "id": "solo",     "label": "獨處家族", "en": "solo" },
-    { "id": "function", "label": "功能家族", "en": "function" },
-    { "id": "screen",   "label": "影像家族", "en": "screen" },
-    { "id": "kpop",     "label": "K-Pop 家族", "en": "k-pop" }
+    { "id": "japanese", "label": "日系", "en": "japanese" },
+    { "id": "solo",     "label": "獨處", "en": "solo" },
+    { "id": "function", "label": "功能", "en": "function" },
+    { "id": "screen",   "label": "影像", "en": "screen" },
+    { "id": "kpop",     "label": "K-Pop", "en": "k-pop" }
   ],
   "playlists": [
     {

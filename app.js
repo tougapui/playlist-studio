@@ -358,7 +358,6 @@
   function init(data) {
     state.data = data;
 
-    document.getElementById("tagline").textContent = data.site.tagline;
     document.getElementById("footer-year").textContent = new Date().getFullYear();
 
     renderFeatured();
