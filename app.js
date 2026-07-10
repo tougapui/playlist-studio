@@ -50,7 +50,7 @@
   /* ---- sidebar player ---- */
 
   function openPlayer(playlist) {
-    var bar = document.getElementById("player-bar");
+    var sidebar = document.getElementById("player-sidebar");
     var name = document.getElementById("player-name");
     var embed = document.getElementById("player-embed");
 
@@ -63,15 +63,13 @@
     iframe.setAttribute("allow", "autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture");
     embed.appendChild(iframe);
 
-    bar.classList.add("is-open");
-    document.body.classList.add("has-player");
+    sidebar.classList.add("is-open");
   }
 
   function closePlayer() {
-    var bar = document.getElementById("player-bar");
+    var sidebar = document.getElementById("player-sidebar");
     var embed = document.getElementById("player-embed");
-    bar.classList.remove("is-open");
-    document.body.classList.remove("has-player");
+    sidebar.classList.remove("is-open");
     embed.innerHTML = "";
   }
 
