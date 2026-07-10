@@ -113,17 +113,18 @@ body {
 
 /* ---- main layout ---- */
 
-.app-body {
-  display: flex;
-  align-items: flex-start;
-}
-
 main {
-  flex: 1;
-  min-width: 0;
   padding: 32px;
   max-width: 1200px;
   margin: 0 auto;
+}
+
+body {
+  transition: padding-right 200ms ease-out;
+}
+
+body.has-player {
+  padding-right: 360px;
 }
 
 /* ---- cover wall ---- */
@@ -221,16 +222,17 @@ main {
 /* ---- side player ---- */
 
 .player-sidebar {
-  width: 0;
-  flex-shrink: 0;
-  overflow: hidden;
-  position: sticky;
+  position: fixed;
   top: 0;
-  max-height: 100vh;
+  right: 0;
+  width: 0;
+  height: 100vh;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   background: var(--bg-raise);
   transition: width 200ms ease-out;
+  z-index: 1001;
 }
 
 .player-sidebar.is-open {
@@ -297,20 +299,23 @@ main {
   .wall-grid {
     grid-template-columns: repeat(2, 1fr);
   }
-  .app-body {
-    flex-direction: column;
-  }
   .player-sidebar {
-    position: static;
+    left: 0;
+    right: 0;
+    top: auto;
+    bottom: 0;
     width: 100%;
     height: 0;
-    max-height: none;
   }
   .player-sidebar.is-open {
-    height: 320px;
+    height: 70vh;
     width: 100%;
     border-left: none;
     border-top: 0.5px solid var(--line);
+  }
+  body.has-player {
+    padding-right: 0;
+    padding-bottom: 70vh;
   }
 }
 
