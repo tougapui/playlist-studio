@@ -240,39 +240,23 @@ body.has-player {
   border-left: 0.5px solid var(--line);
 }
 
-.player-sidebar__header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  padding: 20px 20px 16px;
-  border-bottom: 0.5px solid var(--line);
-  flex-shrink: 0;
-}
-
-.player-sidebar__name {
-  font-family: "Shippori Mincho", serif;
-  font-size: 16px;
-  font-weight: 500;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
 .player-sidebar__close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
   display: flex;
   align-items: center;
   justify-content: center;
   width: 28px;
   height: 28px;
   border-radius: 999px;
-  background: none;
+  background: var(--bg-raise);
   border: 0.5px solid var(--line);
   color: var(--text-dim);
   cursor: pointer;
   font-size: 12px;
   line-height: 1;
-  flex-shrink: 0;
+  z-index: 1;
 }
 
 .player-sidebar__close:hover {
@@ -283,15 +267,14 @@ body.has-player {
 .player-sidebar__embed {
   flex: 1;
   min-height: 0;
-  padding: 20px;
+  padding: 16px;
 }
 
 .player-sidebar__embed iframe {
   width: 100%;
   height: 100%;
   display: block;
-  border: 0.5px solid var(--line);
-  border-radius: 8px;
+  border: none;
 }
 
 /* ---- RWD ---- */

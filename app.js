@@ -51,14 +51,12 @@
 
   function openPlayer(playlist) {
     var sidebar = document.getElementById("player-sidebar");
-    var name = document.getElementById("player-name");
     var embed = document.getElementById("player-embed");
-
-    name.textContent = playlist.name;
 
     embed.innerHTML = "";
     var iframe = document.createElement("iframe");
     iframe.src = embedUrl(playlist);
+    iframe.title = playlist.name;
     iframe.frameBorder = "0";
     iframe.setAttribute("allow", "autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture");
     embed.appendChild(iframe);
