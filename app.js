@@ -24,8 +24,8 @@
     return state.data.families.find(function (f) { return f.id === id; });
   }
 
-  function coverSrc(slug) {
-    return "covers/" + slug + ".jpg";
+  function coverSrc(playlist) {
+    return playlist.coverUrl || "covers/" + playlist.slug + ".jpg";
   }
 
   function initials(name) {
@@ -37,7 +37,7 @@
   function makeCoverImg(playlist, className) {
     var img = document.createElement("img");
     img.className = className;
-    img.src = coverSrc(playlist.slug);
+    img.src = coverSrc(playlist);
     img.alt = playlist.name;
     img.loading = "lazy";
     img.onerror = function () {
@@ -328,12 +328,11 @@
     container.appendChild(grid);
   }
 
-  function makeWallCard(playlist) {
-    var card = document.createElement("div");
-    card.className = "wall-card";
+  var activeWallCover = null;
 
-    var coverWrap = document.createElement("div");
-    coverWrap.className = "wall-card__cover-wrap";
+  function fillWallCoverIdle(coverWrap, playlist) {
+    coverWrap.innerHTML = "";
+    coverWrap.dataset.playing = "0";
 
     var cover = makeCoverImg(playlist, "wall-card__cover");
     coverWrap.appendChild(cover);
@@ -345,7 +344,15 @@
     playIcon.textContent = "▶";
     playOverlay.appendChild(playIcon);
     coverWrap.appendChild(playOverlay);
+  }
 
+  function makeWallCard(playlist) {
+    var card = document.createElement("div");
+    card.className = "wall-card";
+
+    var coverWrap = document.createElement("div");
+    coverWrap.className = "wall-card__cover-wrap";
+    fillWallCoverIdle(coverWrap, playlist);
     card.appendChild(coverWrap);
 
     var name = document.createElement("div");
@@ -354,7 +361,25 @@
     card.appendChild(name);
 
     coverWrap.addEventListener("click", function () {
-      window.open(openLink(playlist), "_blank", "noopener,noreferrer");
+      if (isMobile()) {
+        window.open(openLink(playlist), "_blank", "noopener,noreferrer");
+        return;
+      }
+      if (coverWrap.dataset.playing === "1") return;
+      if (activeWallCover && activeWallCover !== coverWrap) {
+        fillWallCoverIdle(activeWallCover, activeWallCover._playlist);
+      }
+      coverWrap.innerHTML = "";
+      var iframe = document.createElement("iframe");
+      iframe.className = "wall-card__embed";
+      iframe.src = embedUrl(playlist);
+      iframe.frameBorder = "0";
+      iframe.setAttribute("allow", "autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture");
+      iframe.loading = "lazy";
+      coverWrap.appendChild(iframe);
+      coverWrap.dataset.playing = "1";
+      coverWrap._playlist = playlist;
+      activeWallCover = coverWrap;
     });
 
     return card;
