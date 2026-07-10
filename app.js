@@ -71,6 +71,17 @@
     return wrap;
   }
 
+  function shuffle(arr) {
+    var a = arr.slice();
+    for (var i = a.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var t = a[i];
+      a[i] = a[j];
+      a[j] = t;
+    }
+    return a;
+  }
+
   function makeOpenLink(playlist) {
     var a = document.createElement("a");
     a.className = "open-link";
@@ -113,7 +124,7 @@
     card.appendChild(panel);
 
     coverWrap.addEventListener("click", function () {
-      handleFeaturedCoverClick(featured, panel);
+      handleFeaturedCoverClick(featured, panel, coverWrap);
     });
 
     var label = document.createElement("div");
@@ -149,7 +160,7 @@
     container.appendChild(card);
   }
 
-  function handleFeaturedCoverClick(playlist, panel) {
+  function handleFeaturedCoverClick(playlist, panel, coverWrap) {
     if (isMobile()) {
       window.open(openLink(playlist), "_blank", "noopener,noreferrer");
       return;
@@ -159,6 +170,7 @@
     if (isOpen) {
       panel.classList.remove("is-open");
       panel.innerHTML = "";
+      coverWrap.hidden = false;
     } else {
       var inner = document.createElement("div");
       inner.className = "featured-card__panel-inner";
@@ -170,6 +182,8 @@
       panel.innerHTML = "";
       panel.appendChild(inner);
       panel.classList.add("is-open");
+      panel._hideTarget = coverWrap;
+      coverWrap.hidden = true;
     }
   }
 
@@ -233,7 +247,7 @@
       row.appendChild(panel);
 
       head.addEventListener("click", function () {
-        handleRowClick(playlist, panel);
+        handleRowClick(playlist, panel, thumbWrap);
       });
 
       container.appendChild(row);
@@ -243,9 +257,6 @@
   function buildPanelContent(playlist, panel) {
     var inner = document.createElement("div");
     inner.className = "index-row__panel-inner";
-
-    var cover = makeCoverImg(playlist, "index-row__cover");
-    inner.appendChild(cover);
 
     var body = document.createElement("div");
     body.className = "index-row__panel-body";
@@ -268,16 +279,20 @@
 
   function closeAllPanels(except) {
     document.querySelectorAll(
-      ".index-row__panel.is-open, .wall-card__panel.is-open, .featured-card__panel.is-open"
+      ".index-row__panel.is-open, .featured-card__panel.is-open"
     ).forEach(function (p) {
       if (p !== except) {
         p.classList.remove("is-open");
         p.innerHTML = "";
+        if (p._hideTarget) {
+          p._hideTarget.hidden = false;
+          p._hideTarget = null;
+        }
       }
     });
   }
 
-  function handleRowClick(playlist, panel) {
+  function handleRowClick(playlist, panel, thumbWrap) {
     if (isMobile()) {
       window.open(openLink(playlist), "_blank", "noopener,noreferrer");
       return;
@@ -287,10 +302,13 @@
     if (isOpen) {
       panel.classList.remove("is-open");
       panel.innerHTML = "";
+      thumbWrap.hidden = false;
     } else {
       panel.innerHTML = "";
       buildPanelContent(playlist, panel);
       panel.classList.add("is-open");
+      panel._hideTarget = thumbWrap;
+      thumbWrap.hidden = true;
     }
   }
 
@@ -300,29 +318,14 @@
     var container = document.getElementById("wall-families");
     container.innerHTML = "";
 
-    state.data.families.forEach(function (fam) {
-      var playlists = state.data.playlists.filter(function (p) { return p.family === fam.id; });
-      if (playlists.length === 0) return;
+    var grid = document.createElement("div");
+    grid.className = "wall-grid";
 
-      var section = document.createElement("div");
-      section.className = "wall-family";
-
-      var label = document.createElement("div");
-      label.className = "wall-family__label";
-      label.dataset.family = fam.id;
-      label.textContent = fam.label;
-      section.appendChild(label);
-
-      var grid = document.createElement("div");
-      grid.className = "wall-grid";
-
-      playlists.forEach(function (playlist) {
-        grid.appendChild(makeWallCard(playlist));
-      });
-
-      section.appendChild(grid);
-      container.appendChild(section);
+    shuffle(state.data.playlists).forEach(function (playlist) {
+      grid.appendChild(makeWallCard(playlist));
     });
+
+    container.appendChild(grid);
   }
 
   function makeWallCard(playlist) {
@@ -350,51 +353,11 @@
     name.textContent = playlist.name;
     card.appendChild(name);
 
-    var desc = document.createElement("div");
-    desc.className = "wall-card__desc";
-    desc.textContent = playlist.description;
-    card.appendChild(desc);
-
-    if (playlist.followers !== null && playlist.followers !== undefined) {
-      var followers = document.createElement("div");
-      followers.className = "wall-card__followers";
-      followers.textContent = playlist.followers + " 名粉絲";
-      card.appendChild(followers);
-    }
-
-    var panel = document.createElement("div");
-    panel.className = "wall-card__panel";
-    card.appendChild(panel);
-
     coverWrap.addEventListener("click", function () {
-      handleWallCardClick(playlist, panel);
+      window.open(openLink(playlist), "_blank", "noopener,noreferrer");
     });
 
     return card;
-  }
-
-  function handleWallCardClick(playlist, panel) {
-    if (isMobile()) {
-      window.open(openLink(playlist), "_blank", "noopener,noreferrer");
-      return;
-    }
-    var isOpen = panel.classList.contains("is-open");
-    closeAllPanels(panel);
-    if (isOpen) {
-      panel.classList.remove("is-open");
-      panel.innerHTML = "";
-    } else {
-      var inner = document.createElement("div");
-      inner.className = "wall-card__panel-inner";
-      inner.appendChild(makeEmbedWrap(playlist));
-      var actions = document.createElement("div");
-      actions.className = "embed-actions";
-      actions.appendChild(makeOpenLink(playlist));
-      inner.appendChild(actions);
-      panel.innerHTML = "";
-      panel.appendChild(inner);
-      panel.classList.add("is-open");
-    }
   }
 
   /* ---- view mode switching ---- */

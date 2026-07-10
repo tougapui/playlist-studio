@@ -379,15 +379,6 @@ main {
   align-items: flex-start;
 }
 
-.index-row__cover {
-  width: 88px;
-  height: 88px;
-  object-fit: cover;
-  background: var(--bg-raise);
-  border: 0.5px solid var(--line);
-  flex-shrink: 0;
-}
-
 .index-row__panel-body {
   flex: 1;
   min-width: 0;
@@ -423,28 +414,16 @@ main {
 
 /* ---- wall mode ---- */
 
-.wall-family {
-  margin-bottom: 40px;
-}
-
-.wall-family__label {
-  font-size: 10px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 16px;
-}
-
 .wall-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 12px;
 }
 
 .wall-card {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
 }
 
 .wall-card__cover-wrap {
@@ -492,36 +471,11 @@ main {
 }
 
 .wall-card__name {
-  font-size: 14px;
-  font-weight: 500;
-}
-
-.wall-card__desc {
   font-size: 12px;
-  color: var(--text-dim);
-  line-height: 1.5;
-}
-
-.wall-card__followers {
-  font-size: 11px;
-  color: var(--text-dim);
-}
-
-.wall-card__panel {
+  font-weight: 500;
   overflow: hidden;
-  max-height: 0;
-  transition: max-height 180ms ease-out;
-}
-
-.wall-card__panel.is-open {
-  max-height: 220px;
-}
-
-.wall-card__panel-inner {
-  padding-top: 12px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 /* ---- placeholder cover fallback ---- */
