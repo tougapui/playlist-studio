@@ -63,17 +63,23 @@ body {
 .site-header__identity {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 6px;
+}
+
+.site-header__owner {
+  font-size: 11px;
+  letter-spacing: 1px;
+  color: var(--text-dim);
 }
 
 .site-header__brand {
   font-family: "Shippori Mincho", serif;
-  font-size: 22px;
+  font-size: 24px;
   font-weight: 500;
   letter-spacing: 0.5px;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
 }
 
 .spotify-icon {
@@ -105,9 +111,23 @@ body {
   color: var(--gold);
 }
 
+.site-notice a {
+  color: var(--gold);
+  text-decoration: none;
+  border-bottom: 0.5px solid var(--gold);
+  padding-bottom: 1px;
+}
+
 /* ---- main layout ---- */
 
+.app-body {
+  display: flex;
+  align-items: flex-start;
+}
+
 main {
+  flex: 1;
+  min-width: 0;
   padding: 32px;
   max-width: 1200px;
   margin: 0 auto;
@@ -205,37 +225,44 @@ main {
   color: var(--text-dim);
 }
 
-/* ---- bottom player bar ---- */
+/* ---- side player ---- */
 
-.player-bar {
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
+.player-sidebar {
+  width: 0;
+  flex-shrink: 0;
+  overflow: hidden;
+  position: sticky;
+  top: 0;
+  max-height: 100vh;
+  display: flex;
+  flex-direction: column;
   background: var(--bg-raise);
-  border-top: 0.5px solid var(--line);
-  transform: translateY(100%);
-  transition: transform 180ms ease-out;
-  z-index: 1001;
+  transition: width 200ms ease-out;
 }
 
-.player-bar.is-open {
-  transform: translateY(0);
+.player-sidebar.is-open {
+  width: 360px;
+  border-left: 0.5px solid var(--line);
 }
 
-.player-bar__header {
+.player-sidebar__header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 8px 16px;
+  gap: 8px;
+  padding: 16px;
+  flex-shrink: 0;
 }
 
-.player-bar__name {
-  font-size: 13px;
+.player-sidebar__name {
+  font-size: 14px;
   font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-.player-bar__close {
+.player-sidebar__close {
   background: none;
   border: none;
   color: var(--text-dim);
@@ -243,21 +270,23 @@ main {
   font-size: 14px;
   padding: 4px;
   line-height: 1;
+  flex-shrink: 0;
 }
 
-.player-bar__close:hover {
+.player-sidebar__close:hover {
   color: var(--gold);
 }
 
-.player-bar__embed iframe {
-  width: 100%;
-  height: 152px;
-  display: block;
-  border: none;
+.player-sidebar__embed {
+  flex: 1;
+  min-height: 0;
 }
 
-body.has-player main {
-  padding-bottom: 220px;
+.player-sidebar__embed iframe {
+  width: 100%;
+  height: 100%;
+  display: block;
+  border: none;
 }
 
 /* ---- RWD ---- */
@@ -274,6 +303,21 @@ body.has-player main {
   }
   .wall-grid {
     grid-template-columns: repeat(2, 1fr);
+  }
+  .app-body {
+    flex-direction: column;
+  }
+  .player-sidebar {
+    position: static;
+    width: 100%;
+    height: 0;
+    max-height: none;
+  }
+  .player-sidebar.is-open {
+    height: 320px;
+    width: 100%;
+    border-left: none;
+    border-top: 0.5px solid var(--line);
   }
 }
 
