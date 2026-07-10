@@ -133,7 +133,7 @@
     document.getElementById("player-close").addEventListener("click", closePlayer);
   }
 
-  fetch(DATA_URL)
+  fetch(DATA_URL, { cache: "no-cache" })
     .then(function (res) { return res.json(); })
     .then(init)
     .catch(function (err) {
