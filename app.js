@@ -33,7 +33,7 @@
   }
 
   function embedUrl(playlist) {
-    return "https://open.spotify.com/embed/playlist/" + playlist.spotifyId + "?theme=0&autoplay=1";
+    return "https://open.spotify.com/embed/playlist/" + playlist.spotifyId + "?theme=0";
   }
 
   function shuffle(arr) {
